@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Tharanga Motors</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 md:p-10 font-sans flex flex-col relative">
+
+    <!-- Auth (Login) Screen -->
+    <div id="authScreen" class="fixed inset-0 bg-gray-100 z-50 flex flex-col items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100 max-w-sm w-full text-center">
+            <img src="logo.png" alt="Tharanga Motors" class="h-16 w-auto object-contain mix-blend-multiply mx-auto mb-4 opacity-80">
+            <h2 class="text-2xl font-black mb-6 text-blue-900 italic uppercase">System Locked</h2>
+            
+            <input type="password" id="adminPwd" placeholder="Enter Password" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none text-center text-lg tracking-widest mb-2" required>
+            <p id="pwdError" class="text-red-500 text-[11px] font-bold h-4 mb-4 uppercase tracking-widest hidden">Incorrect Password!</p>
+            
+            <button type="button" id="unlockBtn" class="w-full bg-blue-900 text-white font-black py-4 rounded-2xl shadow-lg uppercase tracking-widest hover:bg-blue-800 transition">Unlock Panel</button>
+        </div>
+    </div>
+
+    <!-- Main Application (Hidden Until Unlocked) -->
+    <div id="mainApp" class="hidden flex-col flex-grow w-full">
+        <div class="max-w-6xl mx-auto w-full flex-grow">
+            
+            <!-- Header with Logo -->
+            <div class="flex items-center gap-4 mb-10 border-b-4 border-blue-900 pb-3 inline-flex">
+                <!-- mix-blend-multiply class එක මගින් logo එකේ සුදු background එක ඉවත් කරයි -->
+                <img src="logo.png" alt="Tharanga Motors Logo" class="h-16 w-auto object-contain mix-blend-multiply bg-transparent">
+                <h1 class="text-3xl font-black text-blue-900 italic uppercase">Admin Control Panel</h1>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+                    <h2 id="formTitle" class="text-xl font-black mb-6 text-gray-800 uppercase italic">Add/Edit Bike</h2>
+                    <form id="bikeForm" class="space-y-4">
+                        <input type="hidden" id="editId">
+                        <input type="text" id="name" placeholder="Bike Name" class="w-full p-4 bg-gray-50 border-none rounded-2xl outline-none" required>
+                        <input type="text" id="price" placeholder="Price (e.g. 520,000)" class="w-full p-4 bg-gray-50 border-none rounded-2xl outline-none" required>
+                        
+                        <select id="condition" class="w-full p-4 bg-gray-50 border-none rounded-2xl outline-none" required>
+                            <option value="" disabled selected>Select Condition</option>
+                            <option value="Brand New">Brand New</option>
+                            <option value="Used">Used</option>
+                        </select>
+
+                        <input type="url" id="image" placeholder="Image URL" class="w-full p-4 bg-gray-50 border-none rounded-2xl outline-none" required>
+                        <div class="mt-2 text-center">
+                            <a href="https://sanishtech.com/tools/image-to-link-converter/" target="_blank" class="text-xs font-bold text-blue-600">📷 Image to Link Converter</a>
+                        </div>
+                        
+                        <textarea id="details" placeholder="Full Specifications" class="w-full p-4 bg-gray-50 border-none rounded-2xl h-32 outline-none"></textarea>
+                        
+                        <div class="flex gap-3 pt-4">
+                            <button type="submit" id="saveBtn" class="flex-1 bg-blue-900 text-white font-black py-4 rounded-2xl shadow-lg uppercase tracking-widest">Upload Bike</button>
+                            <button type="button" id="cancelEdit" class="hidden px-6 bg-gray-200 text-gray-600 font-bold rounded-2xl">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+                    <h2 class="text-xl font-bold mb-6 text-red-600 uppercase italic">Stock Management</h2>
+                    <div id="admin-list" class="space-y-3 max-h-[600px] overflow-y-auto"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer with Logo -->
+        <footer class="mt-20 py-10 border-t border-gray-200 text-center flex flex-col items-center gap-3">
+            <!-- මෙහිදීත් logo එකේ background එක අයින් කර ඇත -->
+            <img src="logo.png" alt="Tharanga Motors Logo" class="h-10 w-auto object-contain mix-blend-multiply opacity-60">
+            <p class="text-[10px] text-gray-400 uppercase tracking-[0.3em] font-black">Powered by Hyper Pro</p>
+        </footer>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+        // ---- Unlock System Logic ----
+        const authScreen = document.getElementById('authScreen');
+        const mainApp = document.getElementById('mainApp');
+        const unlockBtn = document.getElementById('unlockBtn');
+        const adminPwd = document.getElementById('adminPwd');
+        const pwdError = document.getElementById('pwdError');
+
+        function tryUnlock() {
+            if(adminPwd.value === "1111") {
+                authScreen.classList.add('hidden');
+                mainApp.classList.remove('hidden');
+                mainApp.classList.add('flex'); 
+            } else {
+                pwdError.classList.remove('hidden');
+                adminPwd.value = '';
+                adminPwd.focus();
+            }
+        }
+
+        unlockBtn.addEventListener('click', tryUnlock);
+        adminPwd.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') tryUnlock();
+        });
+        // -----------------------------
+
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAecvi1GjPsfCMUB_y5mnrovA-fk6k5RUs",
+            authDomain: "tharanga-motors.firebaseapp.com",
+            projectId: "tharanga-motors",
+            storageBucket: "tharanga-motors.firebasestorage.app",
+            appId: "1:175158332604:web:00723ac683b049a94354b9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const form = document.getElementById('bikeForm');
+        const list = document.getElementById('admin-list');
+
+        onSnapshot(collection(db, "bikes"), (snap) => {
+            list.innerHTML = "";
+            snap.forEach(documentObj => {
+                const b = documentObj.data();
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center p-4 bg-gray-50 rounded-2xl border border-gray-100";
+                div.innerHTML = `
+                    <div class="flex-1">
+                        <p class="font-black text-gray-800 uppercase text-sm">${b.name}</p>
+                        <p class="text-xs text-blue-600 font-bold">Rs. ${b.price} | ${b.condition}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="editMode('${documentObj.id}', \`${b.name}\`, '${b.price}', '${b.image}', \`${b.details || ''}\`, '${b.condition}')" class="bg-yellow-400 text-white px-3 py-1.5 rounded-xl text-[10px] font-black uppercase">Edit</button>
+                        <button onclick="deleteBike('${documentObj.id}')" class="bg-red-500 text-white px-3 py-1.5 rounded-xl text-[10px] font-black uppercase">Delete</button>
+                    </div>`;
+                list.appendChild(div);
+            });
+        });
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editId').value;
+            const data = {
+                name: document.getElementById('name').value,
+                price: document.getElementById('price').value,
+                condition: document.getElementById('condition').value,
+                image: document.getElementById('image').value,
+                details: document.getElementById('details').value
+            };
+            id ? await updateDoc(doc(db, "bikes", id), data) : await addDoc(collection(db, "bikes"), data);
+            location.reload(); 
+        };
+
+        window.editMode = (id, name, price, img, details, cond) => {
+            document.getElementById('formTitle').innerText = "Edit Current Bike";
+            document.getElementById('editId').value = id;
+            document.getElementById('name').value = name;
+            document.getElementById('price').value = price;
+            document.getElementById('condition').value = cond;
+            document.getElementById('image').value = img;
+            document.getElementById('details').value = details;
+            document.getElementById('saveBtn').innerText = "Update Now";
+            document.getElementById('cancelEdit').classList.remove('hidden');
+        };
+
+        window.deleteBike = async (id) => {
+            if(confirm("Delete this bike?")) await deleteDoc(doc(db, "bikes", id));
+        };
+        document.getElementById('cancelEdit').onclick = () => location.reload();
+    </script>
+</body>
+</html>
