@@ -4,47 +4,124 @@
     <meta name="google-site-verification" content="S3AB8-Kca20xLDcKXuQ4O872mz1jCr_zzSFnPYCndHw" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Browser Tab එකේ Logo එක (Favicon) -->
     <link rel="icon" type="image/png" href="logo.png">
     
     <title>Tharanga Motors | Premium Motorcycle Dealer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; background-color: #f8fafc; }
-        .hero-gradient {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%), url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-        }
-        .glass-nav { 
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px); 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
-        }
+        .hero-gradient { background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%), url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
         .bike-card { transition: all 0.4s ease; border: 1px solid rgba(226, 232, 240, 0.8); }
-        .bike-card:hover { 
-            transform: translateY(-8px); 
-            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.1); 
-            border-color: rgba(59, 130, 246, 0.3); 
-        }
-        /* Custom Scrollbar */
+        .bike-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.1); border-color: rgba(59, 130, 246, 0.3); }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        /* Modal setup */
         .modal { transition: opacity 0.3s ease-out; z-index: 9999; }
         .modal-container { transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        body.modal-active { overflow: hidden; padding-right: 8px; /* prevents shift */ }
+        body.modal-active { overflow: hidden; padding-right: 8px; }
         .input-ring:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
     </style>
+
+    <!-- Language translation configuration and script -->
+    <script>
+        const i18n = {
+            'en': {
+                nav_home: "Home", nav_stock: "Stock", nav_loc: "Location", nav_cntbtn: "Contact Us",
+                h_badge: "Premium Dealership", 
+                h_sub: "<a href='admin.html' class='hover:text-blue-300'>Curating </a>the finest selection of motorcycles for enthusiasts who demand excellence and reliability.", 
+                btn_brws: "Browse Collection", btn_ctc: "Contact Us",
+                s1_t: "Expert Inspection", s1_p: "Every bike undergoes a rigorous quality check by our master technicians to ensure peak performance.",
+                s2_t: "Genuine Parts", s2_p: "We only deal with 100% authentic spare parts, assuring your safety and the motorcycle's longevity.",
+                s3_t: "Easy Documentation", s3_p: "Hassle-free ownership transfer and clear legal documentation to get you on the road immediately.",
+                st_t: "Current Stock", st_p: "Hand-picked premium motorcycles currently available in our showroom.",
+                pl_srch: "Search models...",
+                opt_all: "All Conditions", opt_new: "Brand New", opt_used: "Used", pl_price: "Max Price", load_stock: "Loading Stock...",
+                l_bdg: "Location Info", l_tt: "Visit Our Showroom", l_dd: "Find our exclusive collection directly at our premises. Navigate via map or drop by to inspect any listed vehicle in person.",
+                btn_map: "Get Directions",
+                ctc_hd: "Start Your <br><span class='text-blue-400'>Next Journey</span>", c_loc: "Showroom Location", c_call: "Call Us Directly",
+                wa_ttl: "Chat on WhatsApp", wa_d: "Instantly check the availability, schedule an inspection, or inquire about current price drops.", btn_msg: "Message Us Now",
+                mod_lp: "Listed Price", mod_spec: "Vehicle Specifications", mod_btn_w: "Confirm using WhatsApp",
+                n_res: "No vehicles match your search", v_dets: "View Details", t_m: "Tharanga Motors"
+            },
+            'sin': {
+                nav_home: "Home එක", nav_stock: "Stock එක", nav_loc: "Location එක", nav_cntbtn: "Contact කරන්න",
+                h_badge: "නොම්බර 1 Premium Deals", 
+                h_sub: "<a href='admin.html' class='hover:text-blue-300 transition'>අපිම check කරලා බලපු</a> හොඳම condition තියෙන quality, reliable premium බයික් හොයන අයට විතරයි.", 
+                btn_brws: "Collection එක බලන්න", btn_ctc: "Call එකක් දෙන්න",
+                s1_t: "හොඳටම Check කරපු (Quality Check)", s1_p: "අපේ Showroom එකට දාලා විකුණන්න කලින් අපිම අපේ expert technicians ලා දාලා හොඳටම check කරලයි බයික්ස් ගන්නේ.",
+                s2_t: "100% Genuine Parts විතරයි", s2_p: "අපි ලඟ තියෙන හැම බයික් එකක්ම 100% authentic spare parts තියෙන, ඔයාගේ පාවිච්චියට කිසිම අවුලක් නැති genuine ඒවා විතරයි.",
+                s3_t: "හරිම ලේසි Documentation", s3_p: "වාහනේ ලියකියවිලි වැඩ, Ownership Transfer කරන එක කිසිම රස්තියාදුවක් නැතුව අපි ඉක්මනටම කරලා දෙනවා.",
+                st_t: "අපේ ලඟ තියෙන Bikes Stock එක", st_p: "දැනට Showroom එකේ Available තියෙන බයික්ස්, ඇවිල්ලම Check කරලා බලන්න.",
+                pl_srch: "Model එකෙන් Search කරන්න...",
+                opt_all: "ඔක්කොම (All Conditions)", opt_new: "අළුත්ම ඒවා (Brand New)", opt_used: "පාවිච්චි කරපු (Used)", pl_price: "Max Price (උපරිම ගාන)", load_stock: "Stock එක Load වෙනවා...",
+                l_bdg: "Location විස්තර", l_tt: "අපේ Showroom එකටම එන්න", l_dd: "අපේ ලඟ තියෙන Bikes එකින් එකට බලන්න ඕනෙනම් අපේ Premises එකටම එන්න. පහළ තියෙන Map එකෙන් Directions බලාගන්න.",
+                btn_map: "Directions ගන්න",
+                ctc_hd: "ඔයාගේ ඊළඟ සුපිරිම බයික් එක<br><span class='text-blue-400'>අදම සෙට් කරගන්න!!</span>", c_loc: "Showroom Location එක", c_call: "අපිට කතා කරන්න",
+                wa_ttl: "WhatsApp එකෙන් Message එකක් දාන්න", wa_d: "Bike එකේ Availability එක දැනගන්න, බලන්න එන්න වෙලාවක් දාගන්න නැත්නම් වෙනස් උනු ගනන් ගැන අහන්න අපිට WhatsApp Message එකක් දාන්න.", btn_msg: "දැන්ම Message එකක් දාන්න",
+                mod_lp: "දාලා තියෙන ගාන", mod_spec: "Vehicle විස්තර (Specifications)", mod_btn_w: "WhatsApp එකෙන් Confirm කරගන්න",
+                n_res: "සමාවෙන්න, ඔයා හොයන Model එකේ Bike එකක් දැන්ම නෑ.", v_dets: "Details බලන්න", t_m: "Tharanga Motors"
+            }
+        };
+
+        let currentLang = 'en';
+
+        // Custom expose for details mapping WhatsApp message template
+        window.getCurrentLang = function() {
+            return currentLang;
+        }
+
+        window.setLang = function(lang) {
+            currentLang = lang;
+            
+            // Buttons visual logic switch 
+            const enBtn = document.getElementById('lang-btn-en');
+            const sinBtn = document.getElementById('lang-btn-sin');
+
+            if (lang === 'en') {
+                enBtn.className = "flex items-center justify-center bg-blue-600 text-white font-bold text-[10px] md:text-xs px-4 py-1.5 rounded-full transition shadow-md border-2 border-blue-400 ring-2 ring-white/10 uppercase";
+                sinBtn.className = "flex items-center justify-center bg-transparent text-slate-300 font-bold text-[10px] md:text-xs px-4 py-1.5 rounded-full transition hover:bg-slate-800 hover:text-white border-2 border-transparent uppercase opacity-80";
+            } else {
+                sinBtn.className = "flex items-center justify-center bg-blue-600 text-white font-bold text-[10px] md:text-xs px-4 py-1.5 rounded-full transition shadow-md border-2 border-blue-400 ring-2 ring-white/10 uppercase";
+                enBtn.className = "flex items-center justify-center bg-transparent text-slate-300 font-bold text-[10px] md:text-xs px-4 py-1.5 rounded-full transition hover:bg-slate-800 hover:text-white border-2 border-transparent uppercase opacity-80";
+            }
+
+            // Simple replace string mechanism for DOM
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if(i18n[lang][key]) { el.innerHTML = i18n[lang][key]; }
+            });
+
+            // Adjust form placeholders manually
+            document.getElementById('searchInput').placeholder = i18n[lang].pl_srch;
+            document.getElementById('priceLimit').placeholder = i18n[lang].pl_price;
+
+            // Trigger Firebase render reload silently in next event cycle for generated templates
+            window.dispatchEvent(new Event('languageChanged'));
+        };
+
+        window.getTranslation = function(key) { return i18n[currentLang][key] || key; };
+    </script>
 </head>
-<body class="text-slate-800">
+<body class="text-slate-800 relative">
+
+    <!-- Udinma penna thiyeanna language selector fixed banner - No layout bugs happen down code -> Mobile and PC responsive ! -->
+    <div class="fixed top-0 left-0 w-full z-[100] h-[48px] bg-[#0a1122] flex items-center justify-center md:justify-end md:pr-10 border-b border-blue-900/40 gap-1 lg:gap-3 transition-all px-2 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.8)]">
+        <span class="text-xs text-blue-200/50 uppercase font-semibold hidden lg:inline mr-2 tracking-widest">Select Language: </span>
+        <button id="lang-btn-en" onclick="setLang('en')" class="flex items-center justify-center bg-blue-600 text-white font-bold text-[10px] md:text-xs px-4 py-1.5 rounded-full transition shadow-md border-2 border-blue-400 ring-2 ring-white/10 uppercase">ENG (ENGLISH)</button>
+        <button id="lang-btn-sin" onclick="setLang('sin')" class="flex items-center justify-center bg-transparent text-slate-300 font-bold text-[10px] md:text-xs px-4 py-1.5 rounded-full transition hover:bg-slate-800 hover:text-white border-2 border-transparent uppercase opacity-80">සිංහල (SINHALA)</button>
+    </div>
+
+    <!-- Nav eka overlap veela kalapayana nowennatha, original height balance bar! -->
+    <div class="h-[48px] w-full bg-slate-900 shrink-0"></div>
 
     <!-- Navigation -->
-    <nav class="glass-nav p-4 lg:px-8 sticky top-0 z-50">
+    <nav class="glass-nav p-4 lg:px-8 sticky top-[48px] z-50">
         <div class="container mx-auto flex justify-between items-center">
             
-            <!-- Navbar Logo -->
             <a href="#" class="flex items-center gap-3">
                 <img src="logo.png" alt="Tharanga Motors Logo" class="h-10 w-auto object-contain">
                 <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 uppercase">
@@ -53,10 +130,10 @@
             </a>
 
             <div class="hidden md:flex items-center space-x-8 font-semibold text-sm tracking-wide text-slate-600 uppercase">
-                <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
-                <a href="#stock" class="hover:text-blue-600 transition-colors">Stock</a>
-                <a href="#location" class="hover:text-blue-600 transition-colors">Location</a>
-                <a href="#contact" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition-colors shadow-md shadow-blue-500/30">Contact Us</a>
+                <a href="#" class="hover:text-blue-600 transition-colors" data-lang="nav_home">Home</a>
+                <a href="#stock" class="hover:text-blue-600 transition-colors" data-lang="nav_stock">Stock</a>
+                <a href="#location" class="hover:text-blue-600 transition-colors" data-lang="nav_loc">Location</a>
+                <a href="#contact" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition-colors shadow-md shadow-blue-500/30" data-lang="nav_cntbtn">Contact Us</a>
             </div>
         </div>
     </nav>
@@ -64,20 +141,20 @@
     <!-- Hero Section -->
     <header class="hero-gradient text-white py-32 md:py-48 text-center relative overflow-hidden">
         <div class="container mx-auto px-4 relative z-10">
-            <span class="inline-block bg-blue-500/20 border border-blue-400/30 backdrop-blur-sm text-blue-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+            <span data-lang="h_badge" class="inline-block bg-blue-500/20 border border-blue-400/30 backdrop-blur-sm text-blue-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
                 Premium Dealership
             </span>
             <h2 class="text-5xl md:text-7xl font-extrabold mb-6 uppercase tracking-tight leading-tight">
-                THARANGA <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">MOTORS</span></a>
+                THARANGA <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">MOTORS</span>
             </h2>
-            <p class="text-lg md:text-xl text-slate-300 font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
-                <a href="admin.html" >Curating </a>the finest selection of motorcycles for enthusiasts who demand excellence and reliability.
+            <p data-lang="h_sub" class="text-lg md:text-xl text-slate-300 font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
+                <a href="admin.html">Curating </a>the finest selection of motorcycles for enthusiasts who demand excellence and reliability.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#stock" class="bg-blue-600 text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 rounded-xl shadow-lg shadow-blue-500/40 hover:bg-blue-700 hover:-translate-y-1 transition-all">
+                <a href="#stock" data-lang="btn_brws" class="bg-blue-600 text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 rounded-xl shadow-lg shadow-blue-500/40 hover:bg-blue-700 hover:-translate-y-1 transition-all">
                     Browse Collection
                 </a>
-                <a href="#contact" class="bg-white/10 backdrop-blur border border-white/20 text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 rounded-xl hover:bg-white/20 transition-all">
+                <a href="#contact" data-lang="btn_ctc" class="bg-white/10 backdrop-blur border border-white/20 text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 rounded-xl hover:bg-white/20 transition-all">
                     Contact Us
                 </a>
             </div>
@@ -94,8 +171,8 @@
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
                     <div>
-                        <h4 class="font-bold text-slate-900 uppercase text-sm tracking-wide mb-2">Expert Inspection</h4>
-                        <p class="text-slate-500 text-sm leading-relaxed">Every bike undergoes a rigorous quality check by our master technicians to ensure peak performance.</p>
+                        <h4 data-lang="s1_t" class="font-bold text-slate-900 uppercase text-sm tracking-wide mb-2">Expert Inspection</h4>
+                        <p data-lang="s1_p" class="text-slate-500 text-sm leading-relaxed">Every bike undergoes a rigorous quality check by our master technicians to ensure peak performance.</p>
                     </div>
                 </div>
                 <!-- Service 2 -->
@@ -104,8 +181,8 @@
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     </div>
                     <div>
-                        <h4 class="font-bold text-slate-900 uppercase text-sm tracking-wide mb-2">Genuine Parts</h4>
-                        <p class="text-slate-500 text-sm leading-relaxed">We only deal with 100% authentic spare parts, assuring your safety and the motorcycle's longevity.</p>
+                        <h4 data-lang="s2_t" class="font-bold text-slate-900 uppercase text-sm tracking-wide mb-2">Genuine Parts</h4>
+                        <p data-lang="s2_p" class="text-slate-500 text-sm leading-relaxed">We only deal with 100% authentic spare parts, assuring your safety and the motorcycle's longevity.</p>
                     </div>
                 </div>
                 <!-- Service 3 -->
@@ -114,8 +191,8 @@
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                     </div>
                     <div>
-                        <h4 class="font-bold text-slate-900 uppercase text-sm tracking-wide mb-2">Easy Documentation</h4>
-                        <p class="text-slate-500 text-sm leading-relaxed">Hassle-free ownership transfer and clear legal documentation to get you on the road immediately.</p>
+                        <h4 data-lang="s3_t" class="font-bold text-slate-900 uppercase text-sm tracking-wide mb-2">Easy Documentation</h4>
+                        <p data-lang="s3_p" class="text-slate-500 text-sm leading-relaxed">Hassle-free ownership transfer and clear legal documentation to get you on the road immediately.</p>
                     </div>
                 </div>
             </div>
@@ -127,8 +204,8 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-col xl:flex-row xl:items-end justify-between mb-12 gap-8">
                 <div>
-                    <h3 class="text-4xl font-extrabold text-slate-900 uppercase tracking-tight mb-2">Current Stock</h3>
-                    <p class="text-slate-500 text-sm font-medium">Hand-picked premium motorcycles currently available in our showroom.</p>
+                    <h3 data-lang="st_t" class="text-4xl font-extrabold text-slate-900 uppercase tracking-tight mb-2">Current Stock</h3>
+                    <p data-lang="st_p" class="text-slate-500 text-sm font-medium">Hand-picked premium motorcycles currently available in our showroom.</p>
                 </div>
                 
                 <div class="flex flex-col sm:flex-row flex-wrap gap-4 w-full xl:w-auto">
@@ -137,9 +214,9 @@
                         <input type="text" id="searchInput" placeholder="Search models..." class="w-full input-ring pl-11 pr-4 py-3 rounded-xl border border-slate-200 text-sm font-medium transition-shadow">
                     </div>
                     <select id="conditionFilter" class="input-ring px-4 py-3 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 bg-white transition-shadow w-full sm:w-auto">
-                        <option value="all">All Conditions</option>
-                        <option value="Brand New">Brand New</option>
-                        <option value="Used">Used</option>
+                        <option value="all" data-lang="opt_all">All Conditions</option>
+                        <option value="Brand New" data-lang="opt_new">Brand New</option>
+                        <option value="Used" data-lang="opt_used">Used</option>
                     </select>
                     <div class="relative w-full sm:w-auto">
                         <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 font-semibold text-sm">Rs.</span>
@@ -150,38 +227,35 @@
             
             <div id="loading-indicator" class="flex justify-center items-center py-20 text-blue-600">
                 <svg class="animate-spin h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                <span class="ml-4 font-semibold tracking-wide uppercase text-sm">Loading Stock...</span>
+                <span class="ml-4 font-semibold tracking-wide uppercase text-sm" data-lang="load_stock">Loading Stock...</span>
             </div>
 
             <div id="bike-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
         </div>
     </section>
 
-   <!-- Location Section (Button Mode Only) -->
+   <!-- Location Section -->
     <section id="location" class="pt-24 pb-12 mt-4">
         <div class="container mx-auto px-4 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-transparent">
                 
-                <!-- Left Text Side -->
                 <div class="max-w-xl text-left">
-                    <span class="inline-block text-blue-600 font-bold uppercase tracking-wider text-[11px] mb-4 border border-blue-200/80 bg-blue-50/50 px-3 py-1 w-max rounded-full">
+                    <span data-lang="l_bdg" class="inline-block text-blue-600 font-bold uppercase tracking-wider text-[11px] mb-4 border border-blue-200/80 bg-blue-50/50 px-3 py-1 w-max rounded-full">
                         Location Info
                     </span>
-                    <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900 uppercase tracking-tight mb-3">Visit Our Showroom</h3>
-                    <p class="text-slate-500 text-sm font-medium leading-relaxed">
+                    <h3 data-lang="l_tt" class="text-3xl md:text-4xl font-extrabold text-slate-900 uppercase tracking-tight mb-3">Visit Our Showroom</h3>
+                    <p data-lang="l_dd" class="text-slate-500 text-sm font-medium leading-relaxed">
                         Find our exclusive collection directly at our premises. Navigate via map or drop by to inspect any listed vehicle in person.
                     </p>
                 </div>
                 
-                <!-- Right Button Side (Dark pill-shaped as requested) -->
                 <div class="shrink-0 w-full md:w-auto mt-2 md:mt-0">
                     <a href="https://maps.app.goo.gl/cv1TwkTz7Ny3QV1EA" target="_blank" class="inline-flex items-center justify-center gap-2.5 bg-[#0f172a] text-white font-bold px-7 py-3.5 rounded-lg hover:bg-blue-600 transition-colors shadow-lg shadow-slate-900/10 text-xs uppercase tracking-wider w-full sm:w-auto">
-                        <!-- Location Outline SVG (like image) -->
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                             <circle cx="12" cy="10" r="3"></circle>
                         </svg>
-                        Get Directions
+                        <span data-lang="btn_map">Get Directions</span>
                     </a>
                 </div>
 
@@ -191,14 +265,13 @@
 
     <!-- Contact Section -->
     <section id="contact" class="py-24 bg-slate-900 text-white relative overflow-hidden mt-12">
-        <!-- Decoration bg -->
         <div class="absolute top-0 right-0 w-[30rem] h-[30rem] bg-blue-600/20 rounded-full blur-[80px] -mr-40 -mt-40 pointer-events-none"></div>
         <div class="absolute bottom-0 left-0 w-[20rem] h-[20rem] bg-cyan-600/10 rounded-full blur-[60px] -ml-20 -mb-20 pointer-events-none"></div>
         
         <div class="container mx-auto px-4 lg:px-8 relative z-10">
             <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div>
-                    <h3 class="text-4xl lg:text-5xl font-extrabold uppercase tracking-tight mb-8 leading-tight">
+                    <h3 data-lang="ctc_hd" class="text-4xl lg:text-5xl font-extrabold uppercase tracking-tight mb-8 leading-tight">
                         Start Your <br><span class="text-blue-400">Next Journey</span>
                     </h3>
                     <div class="space-y-8">
@@ -207,8 +280,7 @@
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                             </div>
                             <div>
-                                <p class="text-slate-400 uppercase font-bold text-xs tracking-wider mb-1">Showroom Location</p>
-                                <!-- යාවත්කාලීන කළ ලිපිනය මෙහි දක්වා ඇත -->
+                                <p data-lang="c_loc" class="text-slate-400 uppercase font-bold text-xs tracking-wider mb-1">Showroom Location</p>
                                 <p class="font-medium text-lg leading-snug">385 A Padavi Parackramapura,<br> Welioya 50582</p>
                             </div>
                         </div>
@@ -217,7 +289,7 @@
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
                             </div>
                             <div>
-                                <p class="text-slate-400 uppercase font-bold text-xs tracking-wider mb-1">Call Us Directly</p>
+                                <p data-lang="c_call" class="text-slate-400 uppercase font-bold text-xs tracking-wider mb-1">Call Us Directly</p>
                                 <p class="font-bold text-2xl tracking-tight text-white">0701038408<br>0777283051</p>
                             </div>
                         </div>
@@ -229,9 +301,9 @@
                     <div class="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center mb-6 shadow-lg shadow-[#25D366]/30">
                         <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                     </div>
-                    <h4 class="text-2xl font-bold mb-3 text-white">Chat on WhatsApp</h4>
-                    <p class="text-slate-400 text-sm mb-8 leading-relaxed">Instantly check the availability, schedule an inspection, or inquire about current price drops.</p>
-                    <a href="https://wa.me/94777283051" target="_blank" class="block w-full bg-[#25D366] text-slate-900 py-4 rounded-xl font-bold uppercase tracking-wider text-sm text-center hover:bg-[#1fad52] transition-colors shadow-lg">
+                    <h4 data-lang="wa_ttl" class="text-2xl font-bold mb-3 text-white">Chat on WhatsApp</h4>
+                    <p data-lang="wa_d" class="text-slate-400 text-sm mb-8 leading-relaxed">Instantly check the availability, schedule an inspection, or inquire about current price drops.</p>
+                    <a href="https://wa.me/94777283051" target="_blank" data-lang="btn_msg" class="block w-full bg-[#25D366] text-slate-900 py-4 rounded-xl font-bold uppercase tracking-wider text-sm text-center hover:bg-[#1fad52] transition-colors shadow-lg">
                         Message Us Now
                     </a>
                 </div>
@@ -245,7 +317,7 @@
             
             <img src="logo.png" alt="Tharanga Motors" class="h-10 w-auto object-contain mb-4 opacity-70">
             
-            <h1 class="text-lg font-bold text-slate-700 uppercase tracking-widest mb-3">Tharanga Motors</h1>
+            <h1 class="text-lg font-bold text-slate-700 uppercase tracking-widest mb-3" data-lang="t_m">Tharanga Motors</h1>
             <p class="text-xs font-semibold text-slate-600 uppercase tracking-widest mb-4">© 2026 All Rights Reserved.</p>
             <p class="text-[11px] font-semibold text-slate-700">DEVELOPED BY <a href="https://sithula-vikasitha.github.io/Hyper-Pro/" target="_blank" class="text-blue-600 font-bold ml-1 hover:text-blue-700 transition-colors">HYPER PRO</a></p>
         </div>
@@ -263,7 +335,6 @@
                 
                 <div id="modalTag" class="absolute top-5 left-5 bg-white text-slate-900 px-4 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider shadow-sm"></div>
                 
-                <!-- Modern Close Button -->
                 <button type="button" id="closeBtn" class="absolute top-5 right-5 bg-black/40 hover:bg-black/70 backdrop-blur-md text-white p-2.5 rounded-full transition-all border border-white/20 shadow-sm" aria-label="Close modal">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
@@ -271,17 +342,16 @@
                 <h2 id="modalTitle" class="absolute bottom-6 left-6 text-3xl font-extrabold text-white uppercase tracking-tight pr-6 drop-shadow-md"></h2>
             </div>
             
-            <!-- Modal Body (Scrollable) -->
             <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar flex-grow">
-                <p class="text-xs uppercase font-bold text-slate-400 tracking-wider mb-1">Listed Price</p>
+                <p data-lang="mod_lp" class="text-xs uppercase font-bold text-slate-400 tracking-wider mb-1">Listed Price</p>
                 <p id="modalPrice" class="text-3xl font-extrabold text-blue-600 mb-6"></p>
                 
-                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">Vehicle Specifications</h3>
+                <h3 data-lang="mod_spec" class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">Vehicle Specifications</h3>
                 <div id="modalDetails" class="text-slate-600 text-sm leading-relaxed whitespace-pre-line bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-8 font-medium"></div>
                 
                 <a id="whatsappBtn" href="#" target="_blank" class="flex items-center justify-center w-full gap-3 bg-slate-900 text-white font-bold py-4 rounded-xl hover:bg-blue-600 shadow-lg shadow-slate-900/20 transition-all uppercase tracking-wider text-sm">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                    Confirm using WhatsApp
+                    <span data-lang="mod_btn_w">Confirm using WhatsApp</span>
                 </a>
             </div>
         </div>
@@ -304,6 +374,9 @@
         
         let allBikes =[];
         let filteredBikes =[];
+
+        // Handle reactive translations when user hits the UI toggle
+        window.addEventListener('languageChanged', () => { filterAndDisplay(); });
 
         onSnapshot(collection(db, "bikes"), (snapshot) => {
             const loader = document.getElementById('loading-indicator');
@@ -333,14 +406,15 @@
                 list.innerHTML = `
                     <div class='col-span-full flex flex-col items-center justify-center py-16 bg-white rounded-2xl border border-slate-100'>
                         <svg class="w-16 h-16 text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <p class='text-slate-400 font-bold uppercase tracking-wider text-sm'>No vehicles match your search</p>
+                        <p class='text-slate-400 font-bold uppercase tracking-wider text-sm'>${window.getTranslation('n_res')}</p>
                     </div>`;
                 return;
             }
             
             let htmlContent = '';
             filteredBikes.forEach((bike, index) => {
-                const condition = bike.condition || 'Used';
+                // UI language values setup gracefully within original HTML dynamic output format. 
+                const condition = bike.condition || 'Used'; 
                 const image = bike.image || 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=800'; 
                 const price = bike.price ? `Rs. ${Number(bike.price.toString().replace(/,/g, '')).toLocaleString('en-US')}` : 'Price on request';
 
@@ -357,7 +431,7 @@
                             <p class="text-blue-600 font-extrabold text-xl mb-6 tracking-tight flex-grow">${price}</p>
                             
                             <button data-index="${index}" class="btn-view-details w-full bg-slate-50 text-slate-700 py-3.5 rounded-xl font-bold text-[11px] uppercase tracking-wider hover:bg-slate-900 hover:text-white transition-colors border border-slate-200 hover:border-slate-900">
-                                View Details
+                                ${window.getTranslation('v_dets')}
                             </button>
                         </div>
                     </div>`;
@@ -365,10 +439,9 @@
             list.innerHTML = htmlContent;
         }
 
-        // Search Listeners
+        // Listeners
         document.querySelectorAll('#searchInput, #conditionFilter, #priceLimit').forEach(el => el.addEventListener('input', filterAndDisplay));
 
-        // Modern Event Delegation for dynamically created elements
         document.getElementById('bike-list').addEventListener('click', function(e) {
             const btn = e.target.closest('.btn-view-details');
             if(btn) {
@@ -378,13 +451,11 @@
             }
         });
 
-        // Safe Modal Functions inside module scope
         const modal = document.getElementById('detailsModal');
         const modalContainer = modal.querySelector('.modal-container');
 
         function openModalView(bike) {
             const condition = bike.condition || 'Used';
-            
             const priceText = bike.price ? `Rs. ${Number(bike.price.toString().replace(/,/g, '')).toLocaleString('en-US')}` : 'Price on request';
             
             document.getElementById('modalTitle').innerText = bike.name || 'Motorcycle Details';
@@ -393,8 +464,12 @@
             document.getElementById('modalPrice').innerText = priceText;
             document.getElementById('modalDetails').innerText = bike.details || "No additional specifications provided for this model.";
             
-            const msg = encodeURIComponent(`Hi Tharanga Motors, I'm interested in the ${bike.name} (${condition}) priced at ${priceText}. Could you please confirm if this is still available?`);
-            document.getElementById('whatsappBtn').href = `https://wa.me/94777283051?text=${msg}`;
+            const msgEn = `Hi Tharanga Motors, I'm interested in the ${bike.name} (${condition}) priced at ${priceText}. Could you please confirm if this is still available?`;
+            const msgSin = `Hi Tharanga Motors, Page එකේ දාලා තියෙන ${bike.name} (${condition}) බයික් එකේ Details & Last price එක (${priceText}) කීයද කියලා, Available ද කියලත් පොඩ්ඩක් කියනවද?`;
+            
+            const selectedMsg = (window.getCurrentLang && window.getCurrentLang() === 'sin') ? msgSin : msgEn;
+
+            document.getElementById('whatsappBtn').href = `https://wa.me/94777283051?text=${encodeURIComponent(selectedMsg)}`;
             
             modal.classList.remove('opacity-0', 'pointer-events-none');
             modalContainer.classList.remove('scale-95');
@@ -407,11 +482,9 @@
             document.body.classList.remove('modal-active');
         }
 
-        // Close Listeners
         document.getElementById('closeBtn').addEventListener('click', hideModal);
         document.getElementById('closeOverlay').addEventListener('click', hideModal);
         
-        // Escape Key Support
         window.addEventListener('keydown', (e) => {
             if (e.key === "Escape" && !modal.classList.contains('pointer-events-none')) {
                 hideModal();
